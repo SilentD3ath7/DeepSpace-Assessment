@@ -3,6 +3,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
 import ReceiptLonglinedIcon from "@mui/icons-material/ReceiptLongOutlined"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import SingleExpense from "./SingleExpense"
+import { useAppContext } from "../AppContext"
 
 export function AllExpenses() {
     return (
@@ -30,9 +31,13 @@ function ListHeader() {
 }
 
 function ExpensesList() {
+    const {localExpensesObject: { localExpenses },} = useAppContext();
+
     return (
         <div className="flex p-1 mt- items-center flex-col gap-5 h-[400px] overflow-y-auto">
-            <SingleExpense/>
+            {localExpenses.map((expense) => (
+                <SingleExpense key={expense.id} singleExpense={expense}/>
+            ))}
         </div>
     );
 }

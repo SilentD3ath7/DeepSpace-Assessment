@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppContext } from "../AppContext";
 import AppsIcon from "@mui/icons-material/Apps"
 import CloseIcon from "@mui/icons-material/Close"
-import AllIcons, { allIconsArray, IconData } from "../AllIcons";
+import AllIcons, { allIconsArray, IconData } from "../LocalData/AllIcons";
 
 export default function IconsWindow() {
     const [allIconsState, setAllIconsState] = useState<IconData[]>(allIconsArray);

@@ -2,8 +2,9 @@ import React from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
+import { Expense } from "../LocalData/LocalExpenses";
 
-export default function SingleExpense() {
+export default function SingleExpense({ singleExpense }: { singleExpense: Expense }) {
     return (
 
         // Parent Container
@@ -19,15 +20,15 @@ export default function SingleExpense() {
 
                 {/* Expense Name */}
                 <div className="flex flex-col">
-                    <span className="font-bold text-slate-700 dark:text-slate-100">Expense Name</span>
-                    <span className="flex text-slate-400 text-[13px] p-[2px]">Wallet</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-100">{singleExpense.name}</span>
+                    <span className="flex text-slate-400 text-[13px] p-[2px]">{singleExpense.wallet}</span>
                 </div>
             </div>
 
             {/* Action buttons */}
             <div className="flex gap-11 font-bold items-center">
                 
-                <span className="text-[16px] text-slate-600 dark:text-slate-100">-99 $</span>
+                <span className="text-[16px] text-slate-600 dark:text-slate-100">$ -{singleExpense.amount}</span>
 
                 <div className="flex gap-2 items-center">
 

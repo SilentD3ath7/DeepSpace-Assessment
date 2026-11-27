@@ -1,5 +1,7 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { allIconsArray, IconData } from "./AllIcons";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { allIconsArray, IconData } from "./LocalData/AllIcons";
+import { Wallet, walletsData } from "./LocalData/LocalWallets";
+import { Expense, expenseData } from "./LocalData/LocalExpenses";
 
 // Define the shape of the contect state
 interface AppState {
@@ -26,6 +28,14 @@ interface AppState {
     openWalletWindowObject: {
         openWalletWindow: boolean;
         setOpenWalletWindow: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+    localWalletObject: {
+        localWallet: Wallet[];
+        setlocalWallet: React.Dispatch<React.SetStateAction<Wallet[]>>;
+    };
+    localExpensesObject: {
+        localExpenses: Expense[];
+        setlocalExpenses: React.Dispatch<React.SetStateAction<Expense[]>>;
     };
 }
 
@@ -55,6 +65,14 @@ const defaultState: AppState = {
         openWalletWindow: false,
         setOpenWalletWindow: () => {},
     },
+    localWalletObject: {
+        localWallet: [],
+        setlocalWallet: () => {},
+    },
+    localExpensesObject: {
+        localExpenses: [],
+        setlocalExpenses: () => {},
+    },
 };
 
 // Create the context with default values
@@ -68,6 +86,31 @@ export const AppProvider: React.FC<{ children: ReactNode }> =({ children, }) => 
     const [openWalletDropDown, setOpenWalletDropDown] = useState(false);
     const [WalletDropDownPositions, setWalletDropDownPositions] = useState({top: 0, left: 0});
     const [openWalletWindow, setOpenWalletWindow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [localWallet, setlocalWallet] = useState<Wallet[]>([]);
+    const [localExpenses, setlocalExpenses] = useState<Expense[]>([]);
+
+    // Simulate the fetching
+    useEffect(() => {
+        async function fetchdata() {
+            try {
+                setIsLoading(true);
+
+                // Simulate a network delay
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                setlocalExpenses(expenseData);
+                setlocalWallet(walletsData);
+            } catch (error) {
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchdata();
+    }, []);
+
+    console.log("localWallet", localWallet);
+    console.log("localExpenses", localExpenses);
 
     return (
         <AppContext.Provider
@@ -77,7 +120,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> =({ children, }) => 
             allIconsArrayObject: {allIcons, setAllIcons},
             openWalletDropDownObject: {openWalletDropDown, setOpenWalletDropDown},
             WalletDropDownPositionsObject: {WalletDropDownPositions, setWalletDropDownPositions},
-            openWalletWindowObject: {openWalletWindow, setOpenWalletWindow},}}>
+            openWalletWindowObject: {openWalletWindow, setOpenWalletWindow},
+            localWalletObject: {localWallet, setlocalWallet},
+            localExpensesObject: {localExpenses, setlocalExpenses},}}>
             {children}
         </AppContext.Provider>
 

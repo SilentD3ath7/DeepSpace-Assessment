@@ -1,4 +1,4 @@
-import { useAppContext } from "./AppContext";
+import { useAppContext } from "../AppContext";
 import * as MuiIcons from "@mui/icons-material"
 
 // export const allIconsArray: IconData[] = [
@@ -17,6 +17,7 @@ export interface IconData {
     isSelected: boolean;
 }
 
+// Grabs the first 100 icons from icons-material for the array
 export const allIconsArray: IconData[] = Object.entries(MuiIcons)
     .filter(([name]) => !/(Outlined|Rounded|TwoTone|Sharp)$/.test(name))
     .slice(0, 100)
