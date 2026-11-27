@@ -23,22 +23,45 @@ import Navigation from '../../components/Navigation'
 import { useToast } from '@/components/ui'
 import { APP_NAME, SCOPE_ID } from '../../constants'
 import { schemas } from '../../schemas'
+import { AppProvider } from '@/components/AppContext'
 
-export default function AppLayout() {
+// export default function AppLayout() {
+//   return (
+//     <DeepSpaceAuthProvider>
+//       {/* The prerendered landing owns the document <title> and React drops it
+//           when <Seo> unmounts, so every route without <Seo> sets its own. */}
+//       <title>{APP_NAME}</title>
+//       <AuthBoot>
+//         <div className="flex h-screen flex-col bg-background overflow-hidden">
+//           <Navigation />
+//           <main className="flex-1 overflow-y-auto min-h-0">
+//             <Suspense fallback={<div className="flex items-center justify-center h-full text-muted-foreground">Loading...</div>}>
+//               <Outlet />
+//             </Suspense>
+//           </main>
+//         </div>
+//       </AuthBoot>
+//     </DeepSpaceAuthProvider>
+//   )
+// }
+
+export default function AppLayout({ children, }: Readonly<{children: ReactNode;}>) {
   return (
     <DeepSpaceAuthProvider>
       {/* The prerendered landing owns the document <title> and React drops it
           when <Seo> unmounts, so every route without <Seo> sets its own. */}
       <title>{APP_NAME}</title>
       <AuthBoot>
-        <div className="flex h-screen flex-col bg-background overflow-hidden">
-          <Navigation />
-          <main className="flex-1 overflow-y-auto min-h-0">
-            <Suspense fallback={<div className="flex items-center justify-center h-full text-muted-foreground">Loading...</div>}>
-              <Outlet />
-            </Suspense>
-          </main>
-        </div>
+        <AppProvider>
+          <div className="flex h-screen flex-col bg-background overflow-hidden">
+            <Navigation />
+            <main className="flex-1 overflow-y-auto min-h-0">
+              <Suspense fallback={<div className="flex items-center justify-center h-full text-muted-foreground">Loading...</div>}>
+                {children ?? <Outlet/>}
+              </Suspense>
+            </main>
+          </div>
+        </AppProvider>
       </AuthBoot>
     </DeepSpaceAuthProvider>
   )
