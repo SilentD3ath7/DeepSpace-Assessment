@@ -72,7 +72,7 @@ function WalletInput() {
                     <input placeholder="Enter Wallet Name..."
                     className={`${inputClass}`}/>
 
-                    <p className={`${errorClass}`}>This is an error</p>
+                    {/* <p className={`${errorClass}`}>This is an error</p> */}
                 </div>
 
                 {/* Icon */}

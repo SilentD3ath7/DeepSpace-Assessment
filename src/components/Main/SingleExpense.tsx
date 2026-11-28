@@ -2,9 +2,25 @@ import React from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
-import { Expense } from "../LocalData/LocalExpenses";
+import { Expense } from "../LocalData/ExpensesArray";
+import { useAppContext } from "../AppContext";
 
 export default function SingleExpense({ singleExpense }: { singleExpense: Expense }) {
+    const {
+    expensesArrayObject: { setExpensesArray },
+    selectedExpenseObject: { selectedExpense, setSelectedExpense }, } = useAppContext();
+
+    const handleDelete = () => {
+        setExpensesArray((prev) => 
+            prev.filter((expense) => expense.id !== singleExpense.id)
+        );
+
+        // If the deleted expense happened to be selected, clear the selection
+        if (selectedExpense?.id === singleExpense.id) {
+            setSelectedExpense(null);
+        }
+    };
+
     return (
 
         // Parent Container
@@ -15,7 +31,7 @@ export default function SingleExpense({ singleExpense }: { singleExpense: Expens
 
                 {/* Expense icon */}
                 <div className="bg-purple-200 dark:bg-purple-600/20 rounded-lg p-2 flex items-center justify-center">
-                    <HomeOutlinedIcon className="text-purple-500" sx={{fonstSize: "27px"}}/>
+                    <HomeOutlinedIcon className="text-purple-500" sx={{fontSize: "27px"}}/>
                 </div>
 
                 {/* Expense Name */}
@@ -28,7 +44,7 @@ export default function SingleExpense({ singleExpense }: { singleExpense: Expens
             {/* Action buttons */}
             <div className="flex gap-11 font-bold items-center">
                 
-                <span className="text-[16px] text-slate-600 dark:text-slate-100">$ -{singleExpense.amount}</span>
+                <span className="text-[16px] text-slate-600 dark:text-slate-100">$ {singleExpense.amount}</span>
 
                 <div className="flex gap-2 items-center">
 
@@ -39,7 +55,9 @@ export default function SingleExpense({ singleExpense }: { singleExpense: Expens
                     </div>
 
                     {/* Delete button */}
-                    <div className="rounded-lg p-2 flex items-center justify-center
+                    <div 
+                    onClick={() => handleDelete()}
+                    className="rounded-lg p-2 flex items-center justify-center
                     cursor-pointer bg-rose-500/20 hover:bg-red-800 text-rose-400 hover:text-white transition-colors">
                         <DeleteOutlineOutlinedIcon sx={{fontSize: "17px"}}/>
                     </div>

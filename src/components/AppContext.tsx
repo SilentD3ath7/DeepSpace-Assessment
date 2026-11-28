@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { allIconsArray, IconData } from "./LocalData/AllIcons";
-import { Wallet, walletsData } from "./LocalData/LocalWallets";
-import { Expense, expenseData } from "./LocalData/LocalExpenses";
+import { Wallet, walletsData } from "./LocalData/WalletsArray";
+import { Expense, expensesData } from "./LocalData/ExpensesArray";
 
 // Define the shape of the contect state
 interface AppState {
@@ -29,13 +29,33 @@ interface AppState {
         openWalletWindow: boolean;
         setOpenWalletWindow: React.Dispatch<React.SetStateAction<boolean>>;
     };
-    localWalletObject: {
-        localWallet: Wallet[];
-        setlocalWallet: React.Dispatch<React.SetStateAction<Wallet[]>>;
+    walletsArrayObject: {
+        walletsArray: Wallet[];
+        setWalletsArray: React.Dispatch<React.SetStateAction<Wallet[]>>;
     };
-    localExpensesObject: {
-        localExpenses: Expense[];
-        setlocalExpenses: React.Dispatch<React.SetStateAction<Expense[]>>;
+    expensesArrayObject: {
+        expensesArray: Expense[];
+        setExpensesArray: React.Dispatch<React.SetStateAction<Expense[]>>;
+    };
+    selectedExpenseObject: {
+        selectedExpense: Expense | null;
+        setSelectedExpense: React.Dispatch<React.SetStateAction<Expense | null>>;
+    };
+    selectedWalletFromMainPageObject: {
+        selectedWalletFromMainPage: Wallet | null;
+        setSelectedWalletFromMainPage: React.Dispatch<React.SetStateAction<Wallet | null>>;
+    };
+    selectedWalletInExpenseWindowObject: {
+        selectedWalletInExpenseWindow: Wallet | null;
+        setSelectedWalletInExpenseWindow: React.Dispatch<React.SetStateAction<Wallet | null>>;
+    };
+    selectedIconObject: {
+        selectedIcon: string;
+        setSelectedIcon: React.Dispatch<React.SetStateAction<string>>;
+    };
+    isClickedOnMainPageObject: {
+        isClickedOnMainPage: boolean;
+        setIsClickedOnMainPage: React.Dispatch<React.SetStateAction<boolean>>;
     };
 }
 
@@ -65,13 +85,33 @@ const defaultState: AppState = {
         openWalletWindow: false,
         setOpenWalletWindow: () => {},
     },
-    localWalletObject: {
-        localWallet: [],
-        setlocalWallet: () => {},
+    walletsArrayObject: {
+        walletsArray: [],
+        setWalletsArray: () => {},
     },
-    localExpensesObject: {
-        localExpenses: [],
-        setlocalExpenses: () => {},
+    expensesArrayObject: {
+        expensesArray: [],
+        setExpensesArray: () => {},
+    },
+    selectedExpenseObject: {
+        selectedExpense: null,
+        setSelectedExpense: () => {},
+    },
+    selectedWalletFromMainPageObject: {
+        selectedWalletFromMainPage: null,
+        setSelectedWalletFromMainPage: () => {},
+    },
+    selectedWalletInExpenseWindowObject: {
+        selectedWalletInExpenseWindow: null,
+        setSelectedWalletInExpenseWindow: () => {},
+    },
+    selectedIconObject: {
+        selectedIcon: "AccountBalance",
+        setSelectedIcon: () => {},
+    },
+    isClickedOnMainPageObject: {
+        isClickedOnMainPage: false,
+        setIsClickedOnMainPage: () => {},
     },
 };
 
@@ -87,30 +127,38 @@ export const AppProvider: React.FC<{ children: ReactNode }> =({ children, }) => 
     const [WalletDropDownPositions, setWalletDropDownPositions] = useState({top: 0, left: 0});
     const [openWalletWindow, setOpenWalletWindow] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [localWallet, setlocalWallet] = useState<Wallet[]>([]);
-    const [localExpenses, setlocalExpenses] = useState<Expense[]>([]);
+    const [walletsArray, setWalletsArray] = useState<Wallet[]>([]);
+    const [expensesArray, setExpensesArray] = useState<Expense[]>([]);
+    const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+    const [selectedWalletFromMainPage, setSelectedWalletFromMainPage] = useState<Wallet | null>(null);
+    const [selectedWalletInExpenseWindow, setSelectedWalletInExpenseWindow] = useState<Wallet | null>(null);
+    const [selectedIcon, setSelectedIcon] = useState("AccountBalance");
+    const [isClickedOnMainPage, setIsClickedOnMainPage] = useState(false);
 
     // Simulate the fetching
-    useEffect(() => {
-        async function fetchdata() {
-            try {
-                setIsLoading(true);
+    // useEffect(() => {
+    //     async function fetchdata() {
+    //         try {
+    //             setIsLoading(true);
 
-                // Simulate a network delay
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                setlocalExpenses(expenseData);
-                setlocalWallet(walletsData);
-            } catch (error) {
-            } finally {
-                setIsLoading(false);
-            }
-        }
+    //             // Simulate a network delay
+    //             await new Promise((resolve) => setTimeout(resolve, 1000));
+    //             setExpensesArray(expensesData);
+    //             setWalletsArray(walletsData);
 
-        fetchdata();
-    }, []);
+    //             // Set the first wallet as the default once loaded
+    //             setSelectedWalletFromMainPage(walletsData[0] ?? null);
+    //         } catch (error) {
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     }
 
-    console.log("localWallet", localWallet);
-    console.log("localExpenses", localExpenses);
+    //     fetchdata();
+    // }, []);
+
+    console.log("walletsArray", walletsArray);
+    console.log("expensesArray", expensesArray);
 
     return (
         <AppContext.Provider
@@ -121,8 +169,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> =({ children, }) => 
             openWalletDropDownObject: {openWalletDropDown, setOpenWalletDropDown},
             WalletDropDownPositionsObject: {WalletDropDownPositions, setWalletDropDownPositions},
             openWalletWindowObject: {openWalletWindow, setOpenWalletWindow},
-            localWalletObject: {localWallet, setlocalWallet},
-            localExpensesObject: {localExpenses, setlocalExpenses},}}>
+            walletsArrayObject: {walletsArray, setWalletsArray},
+            expensesArrayObject: {expensesArray, setExpensesArray},
+            selectedExpenseObject: {selectedExpense, setSelectedExpense},
+            selectedWalletFromMainPageObject: {selectedWalletFromMainPage, setSelectedWalletFromMainPage},
+            selectedWalletInExpenseWindowObject: {selectedWalletInExpenseWindow, setSelectedWalletInExpenseWindow},
+            selectedIconObject: {selectedIcon, setSelectedIcon},
+            isClickedOnMainPageObject: {isClickedOnMainPage, setIsClickedOnMainPage},}}>
             {children}
         </AppContext.Provider>
 

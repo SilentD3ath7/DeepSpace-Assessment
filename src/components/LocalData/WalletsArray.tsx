@@ -9,6 +9,11 @@ export interface Wallet {
 export const walletsData: Wallet[] = [
     {
         id: v4(),
+        name: "All Wallets",
+        icon: "DensitySmall",
+    },
+    {
+        id: v4(),
         name: "Cash",
         icon: "AccountBalanceWallet",
     },

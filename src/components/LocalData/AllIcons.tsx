@@ -27,15 +27,37 @@ export const allIconsArray: IconData[] = Object.entries(MuiIcons)
         name,
         isSelected: false
     }))
+    allIconsArray[0].isSelected = true;
 
 export default function AllIcons() {
-    const {allIconsArrayObject: { allIcons, setAllIcons },} = useAppContext();
+    const {
+        allIconsArrayObject: { allIcons, setAllIcons },
+        selectedIconObject: { setSelectedIcon },
+        openIconWindowObject: { setOpenIconWindow },
+    } = useAppContext();
+
+    function handleIconSelection(singleIcon: IconData) {
+        setAllIcons((prevIcons) => 
+            prevIcons.map((icon) => {
+                if (icon.name === singleIcon.name) {
+                    setSelectedIcon(icon.name);
+                    return {...icon, isSelected: true};
+                }
+
+                return {...icon, isSelected: false};
+            })
+        );
+
+        // Close the icon window
+        setOpenIconWindow(false);
+    }
 
     return (
         <div className="flex flex-wrap gap-2 text-purple-600 p-3">
             {allIcons.map((singleIcon, index) => (
                 <div
                 key={index}
+                onClick={() => handleIconSelection(singleIcon)}
                 className={`w-9 h-9 shadow-sm border border-slate-50 flex items-center
                     justify-center rounded-lg hover:bg-purple-600 hover:text-white hover:border-purple-500
                     ${
