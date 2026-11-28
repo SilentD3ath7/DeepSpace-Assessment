@@ -4,6 +4,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import { Expense } from "../LocalData/ExpensesArray";
 import { useAppContext } from "../AppContext";
+import { getIconComponent } from "../NameToIcon";
 
 export default function SingleExpense({ singleExpense }: { singleExpense: Expense }) {
     const {
@@ -31,7 +32,7 @@ export default function SingleExpense({ singleExpense }: { singleExpense: Expens
 
                 {/* Expense icon */}
                 <div className="bg-purple-200 dark:bg-purple-600/20 rounded-lg p-2 flex items-center justify-center">
-                    <HomeOutlinedIcon className="text-purple-500" sx={{fontSize: "27px"}}/>
+                    {getIconComponent(singleExpense.icon, "text-purple-500")}
                 </div>
 
                 {/* Expense Name */}

@@ -136,26 +136,26 @@ export const AppProvider: React.FC<{ children: ReactNode }> =({ children, }) => 
     const [isClickedOnMainPage, setIsClickedOnMainPage] = useState(false);
 
     // Simulate the fetching
-    // useEffect(() => {
-    //     async function fetchdata() {
-    //         try {
-    //             setIsLoading(true);
+    useEffect(() => {
+        async function fetchdata() {
+            try {
+                setIsLoading(true);
 
-    //             // Simulate a network delay
-    //             await new Promise((resolve) => setTimeout(resolve, 1000));
-    //             setExpensesArray(expensesData);
-    //             setWalletsArray(walletsData);
+                // Simulate a network delay
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                setExpensesArray(expensesData);
+                setWalletsArray(walletsData);
 
-    //             // Set the first wallet as the default once loaded
-    //             setSelectedWalletFromMainPage(walletsData[0] ?? null);
-    //         } catch (error) {
-    //         } finally {
-    //             setIsLoading(false);
-    //         }
-    //     }
+                // Set the first wallet as the default once loaded
+                setSelectedWalletFromMainPage(walletsData[0] ?? null);
+            } catch (error) {
+            } finally {
+                setIsLoading(false);
+            }
+        }
 
-    //     fetchdata();
-    // }, []);
+        fetchdata();
+    }, []);
 
     console.log("walletsArray", walletsArray);
     console.log("expensesArray", expensesArray);

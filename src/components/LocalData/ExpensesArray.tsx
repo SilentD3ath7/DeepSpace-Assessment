@@ -13,7 +13,7 @@ export const expensesData: Expense[] = [
         id: v4(),
         name: "Groceries",
         wallet: "Cash",
-        icon: "LocalGroceryStore",
+        icon: "ShoppingCart",
         amount: -75.5,
     },
     {
@@ -41,7 +41,7 @@ export const expensesData: Expense[] = [
         id: v4(),
         name: "Movie Tickets",
         wallet: "Credit Card",
-        icon: "MovieTheater",
+        icon: "LocalActivity",
         amount: -24.99,
     },
 ]

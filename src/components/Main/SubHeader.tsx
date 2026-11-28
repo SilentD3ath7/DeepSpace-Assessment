@@ -2,6 +2,7 @@ import React from "react"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined"
 import { useAppContext } from "../AppContext";
+import { getIconComponent } from "../NameToIcon";
 
 export default function SubHeader() {
     return (
@@ -37,7 +38,7 @@ function WalletOptions() {
 
             {/* Wallet icon */}
             {/* <HomeOutlinedIcon className="text-purple-500" sx={{fontSize: "27px"}}/> */}
-            {selectedWalletFromMainPage && selectedWalletFromMainPage.icon}
+            {selectedWalletFromMainPage && getIconComponent(selectedWalletFromMainPage.icon)}
 
             {/* Wallet name */}
             <span className={`text-[15px] mt-1 text-slate-800 dark:text-slate-200`}>{selectedWalletFromMainPage?.name}</span>
